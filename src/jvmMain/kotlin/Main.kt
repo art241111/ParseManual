@@ -7,8 +7,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import parse.pdf.parseToStyledWord
-import parse.styledWordFromPdf.data.WordCategory
 import parse.styledWordFromPdf.parseToWordWithCategory
+import parse.wordWithCategory.parseToCommand
 import java.io.File
 
 private const val PDF_DIR = "src/jvmMain/resources/manual_trim.pdf"
@@ -23,7 +23,8 @@ fun App() {
             text = "Hello, Desktop!"
             val styledWords = File(PDF_DIR).parseToStyledWord()
             val wordsWithCategory = styledWords.parseToWordWithCategory()
-            println(wordsWithCategory.filter { it.category == WordCategory.COMMAND_NAME }.joinToString("\n"))
+            val commands = wordsWithCategory.parseToCommand()
+            println(commands.joinToString("\n"))
         }) {
             Text(text)
         }

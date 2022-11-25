@@ -1,5 +1,5 @@
 package parse.styledWordFromPdf.data
 
 enum class WordCategory {
-    COMMAND_NAME, PARAMETERS_NAME, TEXT
+    COMMAND_NAME, SECTION_NAME, TEXT
 }

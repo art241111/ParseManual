@@ -3,14 +3,12 @@ package parse.styledWordFromPdf.utils
 import java.util.*
 
 object SectionName {
-    private val parametersName = mutableListOf<String>(
-        "function",
-        "parameter",
-        "explanation",
-        "example",
-        "note"
-    )
+    enum class Names {
+        FUNCTION, PARAMETER, PARAMETERS, EXPLANATION, NOTE, EXAMPLE
+    }
 
     fun isSectionName(text: String): Boolean =
-        parametersName.contains(text.trim().lowercase(Locale.getDefault()))
+        Names.values().map { it.name }.contains(text.trim().uppercase(Locale.getDefault()))
+
+    fun getNames(text: String): Names = Names.valueOf(text.trim().uppercase())
 }

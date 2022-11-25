@@ -20,7 +20,7 @@ fun List<StyledWordFromPdf>.parseToWordWithCategory(): List<WordWithCategory> =
                 WordWithCategory(
                     word = styledWord.word,
                     coordinate = styledWord.coordinate,
-                    category = WordCategory.PARAMETERS_NAME
+                    category = WordCategory.SECTION_NAME
                 )
             } else { // Else it is a command name
                 WordWithCategory(

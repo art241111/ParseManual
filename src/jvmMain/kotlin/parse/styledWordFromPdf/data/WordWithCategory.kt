@@ -2,8 +2,12 @@ package parse.styledWordFromPdf.data
 
 import data.Word
 
-data class WordWithCategory(
+class WordWithCategory(
     override val word: String,
     val coordinate: Pair<Float, Float>,
     val category: WordCategory
-) : Word
+) : Word {
+    override fun toString(): String {
+        return word
+    }
+}
