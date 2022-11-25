@@ -2,15 +2,15 @@ package parse.pdf
 
 import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.parser.PdfTextExtractor
-import parse.pdf.data.Word
+import parse.pdf.data.StyledWordFromPdf
 import strateg.Strateg
 import java.io.File
 
 
-fun parsePdf(manual: File): List<Word> {
+fun parsePdf(manual: File): List<StyledWordFromPdf> {
     val reader = PdfReader(manual.absolutePath)
 
-    val words = mutableListOf<Word>()
+    val words = mutableListOf<StyledWordFromPdf>()
 
     // не забываем, что нумерация страниц в PDF начинается с единицы.
     for (i in 1..reader.numberOfPages) {

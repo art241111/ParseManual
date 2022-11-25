@@ -4,13 +4,13 @@ import com.itextpdf.text.pdf.parser.ImageRenderInfo
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy
 import com.itextpdf.text.pdf.parser.TextRenderInfo
 import com.itextpdf.text.pdf.parser.Vector
-import parse.pdf.data.Word
+import parse.pdf.data.StyledWordFromPdf
 
 
 class Strateg() : TextExtractionStrategy {
     var string: TextRenderInfo? = null
-    private val _words: MutableList<Word> = mutableListOf()
-    val words: List<Word> = _words
+    private val _words: MutableList<StyledWordFromPdf> = mutableListOf()
+    val words: List<StyledWordFromPdf> = _words
 
     override fun beginTextBlock() {}
 
@@ -28,7 +28,7 @@ class Strateg() : TextExtractionStrategy {
 //            val isBold = font.fullFontName[0][3].contains("Bold")
 
             _words.add(
-                Word(
+                StyledWordFromPdf(
                     word = letter,
                     coordinate = Pair(x, y),
                     style = font
