@@ -27,16 +27,24 @@ class Strateg() : TextExtractionStrategy {
             val letter = renderInfo.text
             val font = renderInfo.font
 
-            if ((letter == " ") || (letter == "\n")) {
+            if (letter == " ") {
                 var word = ""
                 _editWord.forEach { word += it.word }
+
+                if (
+                    _words.isNotEmpty() && _words.last().coordinate.second != y &&
+                    word.isNotEmpty() && word.first().isUpperCase()
+                ) {
+                    word = "\n" + word
+                }
+
                 _words.add(
                     StyledWordFromPdf(
                         word = word + letter,
                         coordinate = if (_editWord.isNotEmpty())
                             Pair(
                                 _editWord[0].coordinate.first,
-                                _editWord[0].coordinate.first
+                                _editWord[0].coordinate.second,
                             ) else
                             Pair(x, y),
                         style = font
@@ -64,7 +72,6 @@ class Strateg() : TextExtractionStrategy {
     // эта функция вызывается перед окончанием getTextFromPage и ее результат вернется пользователю.
     override fun getResultantText(): String {
         var text = ""
-//        page.cleanLines()
         words.forEach {
             text += it.word + "\n"
         }

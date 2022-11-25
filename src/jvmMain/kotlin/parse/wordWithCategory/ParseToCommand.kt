@@ -16,24 +16,13 @@ fun List<WordWithCategory>.parseToCommand(): List<Command> {
 
         commands.add(
             Command(
-                name = fullName.split(" ")[0],
-                fullName = fullName,
-                function = commandBlocks.sections
-                    .filter { it.name == SectionName.Names.FUNCTION }
-                    .map { it.words.joinToString(" ") }
-                    .getOrElse(0) { "" },
-                parametersDescription = commandBlocks.sections
-                    .filter { it.name == SectionName.Names.PARAMETER || it.name == SectionName.Names.PARAMETERS }
-                    .map { it.words.joinToString(" ") }
-                    .getOrElse(0) { "" },
-                explanation = commandBlocks.sections
-                    .filter { it.name == SectionName.Names.EXPLANATION }
-                    .map { it.words.joinToString(" ") }
-                    .getOrElse(0) { "" },
-                example = commandBlocks.sections
-                    .filter { it.name == SectionName.Names.EXAMPLE }
-                    .map { it.words.joinToString(" ") }
-                    .getOrElse(0) { "" },
+                name = fullName.split(" ")[0].trim(),
+                fullName = fullName.trim(),
+                function = commandBlocks.getSectionText(SectionName.Names.FUNCTION),
+                parametersDescription = commandBlocks.getSectionText(SectionName.Names.PARAMETER)
+                        + commandBlocks.getSectionText(SectionName.Names.PARAMETERS),
+                explanation = commandBlocks.getSectionText(SectionName.Names.EXPLANATION),
+                example = commandBlocks.getSectionText(SectionName.Names.EXAMPLE),
                 false
             )
         )
@@ -41,6 +30,10 @@ fun List<WordWithCategory>.parseToCommand(): List<Command> {
     return commands
 }
 
+private fun CommandInSection.getSectionText(sectionName: SectionName.Names): String =
+    sections.filter { it.name == sectionName }
+        .map { it.words.joinToString(" ").trim() }
+        .getOrElse(0) { "" }
 
 private fun List<WordWithCategory>.toCommandInSection(): MutableList<CommandInSection> {
     val wordsCommand = mutableListOf<WordWithCategory>()
@@ -84,10 +77,12 @@ private fun List<WordWithCategory>.toCommandInSection(): MutableList<CommandInSe
             sectionName = if (sectionName == "") {
                 word.word
             } else {
+                val words = wordsCommand.toMutableList() // toMutableList() - to assign a value, not a link)
+                words.removeFirstOrNull()
                 sections.add(
                     Section(
                         name = SectionName.getNames(sectionName),
-                        words = wordsCommand.toMutableList() // toMutableList() - to assign a value, not a link)
+                        words = words
                     )
                 )
                 word.word

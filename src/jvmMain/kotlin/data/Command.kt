@@ -11,5 +11,17 @@ data class Command(
     val explanation: String = "",
     val example: String = "",
     val isMultiParameters: Boolean = false
-)
+) {
+    override fun toString(): String {
+        return "/*******************************************************/" +
+                "Name: $name\n" +
+                "FullName: $fullName\n" +
+                "function: $function\n" +
+                "parametersDescription: $parametersDescription\n" +
+                "explanation: $explanation\n" +
+                "example: $example\n" +
+                "isMultiParameters: $isMultiParameters\n" +
+                "/******************************************************/"
+    }
+}
 
