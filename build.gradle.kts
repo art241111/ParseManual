@@ -1,6 +1,5 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -27,6 +26,13 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
+
+                // https://mvnrepository.com/artifact/net.sf.cssbox/pdf2dom
+                implementation("net.sf.cssbox:pdf2dom:2.0.1")
+                implementation("org.apache.pdfbox:pdfbox-tools:2.0.13")
+                // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+                implementation("com.itextpdf:itextpdf:5.5.13.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
         }
         val jvmTest by getting
