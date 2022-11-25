@@ -4,7 +4,7 @@ import java.util.*
 
 object SectionName {
     enum class Names {
-        FUNCTION, PARAMETER, PARAMETERS, EXPLANATION, NOTE, EXAMPLE
+        FUNCTION, PARAMETER, PARAMETERS, EXPLANATION, EXPLANATIONS, NOTE, EXAMPLE
     }
 
     fun isSectionName(text: String): Boolean =

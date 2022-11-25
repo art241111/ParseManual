@@ -20,11 +20,13 @@ fun List<WordWithCategory>.parseToCommand(): List<Command> {
                 function = commandBlocks.getSectionText(SectionName.Names.FUNCTION),
                 parametersDescription = commandBlocks.getSectionText(SectionName.Names.PARAMETER)
                         + commandBlocks.getSectionText(SectionName.Names.PARAMETERS),
-                explanation = commandBlocks.getSectionText(SectionName.Names.EXPLANATION),
+                explanation = commandBlocks.getSectionText(SectionName.Names.EXPLANATION)
+                        + commandBlocks.getSectionText(SectionName.Names.EXPLANATIONS),
                 example = commandBlocks.getSectionText(SectionName.Names.EXAMPLE),
                 false
             )
         )
     }
-    return commands
+
+    return commands.filter { it.name.first().isDefined() || !it.name.first().isDigit() } // TODO: Не работает фильтрация
 }
