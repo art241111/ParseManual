@@ -7,8 +7,8 @@ import strateg.Strateg
 import java.io.File
 
 
-fun parsePdf(manual: File): List<StyledWordFromPdf> {
-    val reader = PdfReader(manual.absolutePath)
+fun File.parseToStyledWord(): List<StyledWordFromPdf> {
+    val reader = PdfReader(this.absolutePath)
 
     val words = mutableListOf<StyledWordFromPdf>()
 

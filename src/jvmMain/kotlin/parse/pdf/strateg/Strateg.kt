@@ -12,6 +12,7 @@ class Strateg() : TextExtractionStrategy {
     private val _words: MutableList<StyledWordFromPdf> = mutableListOf()
     val words: List<StyledWordFromPdf> = _words
 
+    private var _editWord: MutableList<StyledWordFromPdf> = mutableListOf()
     override fun beginTextBlock() {}
 
     // при вызове getTextFromPage эта функция вызывается при каждой команде, отображающей текст.
@@ -25,15 +26,33 @@ class Strateg() : TextExtractionStrategy {
             val y = renderInfo.baseline.startPoint[Vector.I2]
             val letter = renderInfo.text
             val font = renderInfo.font
-//            val isBold = font.fullFontName[0][3].contains("Bold")
 
-            _words.add(
-                StyledWordFromPdf(
-                    word = letter,
-                    coordinate = Pair(x, y),
-                    style = font
+            if ((letter == " ") || (letter == "\n")) {
+                var word = ""
+                _editWord.forEach { word += it.word }
+                _words.add(
+                    StyledWordFromPdf(
+                        word = word + letter,
+                        coordinate = if (_editWord.isNotEmpty())
+                            Pair(
+                                _editWord[0].coordinate.first,
+                                _editWord[0].coordinate.first
+                            ) else
+                            Pair(x, y),
+                        style = font
+                    )
                 )
-            )
+                _editWord = mutableListOf()
+            } else {
+                _editWord.add(
+                    StyledWordFromPdf(
+                        word = letter,
+                        coordinate = Pair(x, y),
+                        style = font
+                    )
+                )
+            }
+
         }
     }
 
