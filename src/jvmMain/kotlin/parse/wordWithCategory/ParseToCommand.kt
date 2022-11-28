@@ -27,6 +27,5 @@ fun List<WordWithCategory>.parseToCommand(): List<Command> {
             )
         )
     }
-
-    return commands.filter { it.name.first().isDefined() || !it.name.first().isDigit() } // TODO: Не работает фильтрация
+    return commands.filter { it.name.isNotEmpty() && !it.fullName.first().isDigit() }
 }
